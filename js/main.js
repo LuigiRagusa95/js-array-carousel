@@ -75,3 +75,14 @@ nextBtn.addEventListener('click', function () {
     // remove selection glitch
     nextBtn.style.userSelect = 'none';
 });
+
+// *bonus*
+[...document.querySelectorAll('.thumb')].forEach((node) => {
+    node.addEventListener('click', (event) => {
+        currentIndex = [...document.querySelectorAll('.thumb')].indexOf(node);
+        if (images.getElementsByClassName('active')[0]) images.getElementsByClassName('active')[0].classList.remove('active');
+        if (thumbs.getElementsByClassName('active')[0]) thumbs.getElementsByClassName('active')[0].classList.remove('active');
+        images.getElementsByClassName('image-container')[currentIndex].classList.add('active');
+        thumbs.getElementsByClassName('thumb')[currentIndex].classList.add('active');
+    });
+});
