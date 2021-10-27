@@ -44,13 +44,25 @@ for (let i = 0; i < imageCollection.length; i++) {
     <div class="image-container ${i === 0 ? 'active' : ''}">
         <img src="${path}" alt="Lorem">
         <div class="text">
-            <h3>${titleCollection[0]}</h3>
-            <p>${textCollection[0]}</p>
+            <h3>${titleCollection[i]}</h3>
+            <p>${textCollection[i]}</p>
         </div>
     </div>
     `;
     prevBtn.insertAdjacentHTML('beforebegin', `<div class="thumb ${i === currentIndex ? 'active' : ''}"><img src="${path}" alt="Lorem"></div>`);
 }
+
+prevBtn.addEventListener('click', function () {
+    // index update
+    currentIndex <= 0 ? (currentIndex = imageCollection.length - 1) : --currentIndex;
+    // class reset
+    if (images.getElementsByClassName('active')[0]) images.getElementsByClassName('active')[0].classList.remove('active');
+    if (thumbs.getElementsByClassName('active')[0]) thumbs.getElementsByClassName('active')[0].classList.remove('active');
+    images.getElementsByClassName('image-container')[currentIndex].classList.add('active');
+    thumbs.getElementsByClassName('thumb')[currentIndex].classList.add('active');
+    // remove selection glitch
+    prevBtn.style.userSelect = 'none';
+});
 
 nextBtn.addEventListener('click', function () {
     // index update
@@ -60,4 +72,6 @@ nextBtn.addEventListener('click', function () {
     if (thumbs.getElementsByClassName('active')[0]) thumbs.getElementsByClassName('active')[0].classList.remove('active');
     images.getElementsByClassName('image-container')[currentIndex].classList.add('active');
     thumbs.getElementsByClassName('thumb')[currentIndex].classList.add('active');
+    // remove selection glitch
+    nextBtn.style.userSelect = 'none';
 });
