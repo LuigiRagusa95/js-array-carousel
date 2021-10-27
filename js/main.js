@@ -31,25 +31,33 @@ const textCollection = [
 /* Logic */
 
 // destructuring
-const [images, thumbs] = document.querySelector('.carousel').children;
-const [prevBtn, nextBtn] = document.querySelector('.thumbs').children;
-let currentImage = 0;
+const images = document.querySelector('.images');
+const thumbs = document.querySelector('.thumbs');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+
+let currentIndex = 0;
 
 for (let i = 0; i < imageCollection.length; i++) {
     const path = imageCollection[i];
     images.innerHTML += `
-    <div class="image-container ${i === currentImage ? 'active' : ''}">
+    <div class="image-container ${i === 0 ? 'active' : ''}">
         <img src="${path}" alt="Lorem">
         <div class="text">
-            <h3>Lorem</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo repellat laborum provident magnam ducimus dolore enim.</p>
+            <h3>${titleCollection[0]}</h3>
+            <p>${textCollection[0]}</p>
         </div>
     </div>
     `;
-
-    thumbs.innerHTML += `
-    <div class="thumb ${i === currentImage ? 'active' : ''}">
-        <img src="${path}" alt="Lorem">
-    </div>
-    `;
+    prevBtn.insertAdjacentHTML('beforebegin', `<div class="thumb ${i === currentIndex ? 'active' : ''}"><img src="${path}" alt="Lorem"></div>`);
 }
+
+nextBtn.addEventListener('click', function () {
+    // index update
+    currentIndex < imageCollection.length - 1 ? ++currentIndex : (currentIndex = 0);
+    // class reset
+    if (images.getElementsByClassName('active')[0]) images.getElementsByClassName('active')[0].classList.remove('active');
+    if (thumbs.getElementsByClassName('active')[0]) thumbs.getElementsByClassName('active')[0].classList.remove('active');
+    images.getElementsByClassName('image-container')[currentIndex].classList.add('active');
+    thumbs.getElementsByClassName('thumb')[currentIndex].classList.add('active');
+});
